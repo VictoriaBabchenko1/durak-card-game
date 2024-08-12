@@ -3,16 +3,25 @@ class DeckController {
 
     static createDeck() {
         const suits = ['clubs', 'diamonds', 'spades', 'hearts'];
-        const ranks = ['6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];//use obj
-        const values = [6, 7, 8, 9, 10, 11, 12, 13, 14];
+        const ranksAndValues = {
+            '6': 6,
+            '7': 7,
+            '8': 8,
+            '9': 9,
+            '10': 10,
+            'Jack': 11,
+            'Queen': 12,
+            'King': 13,
+            'Ace': 14
+        };
 
-        for (let s = 0; s < suits.length; s++) {
-            for (let r = 0; r < ranks.length; r++) {
-                this.cards.push(new CardModel(suits[s], ranks[r], values[r]));//rename s r
+        for (let suit of suits) {
+            for (let [rank, value] of Object.entries(ranksAndValues)) {
+                this.cards.push(new CardModel(suit, rank, value));
             }
         }
 
-        DeckView.renderDeck(this.cards.length);
+        DeckView.render(this.cards.length);
     }
 
     static shuffleDeck() {

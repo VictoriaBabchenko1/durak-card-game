@@ -1,21 +1,21 @@
 class CardView {
-    static renderCard(cardModel, cardsContainer) {
-        const element = document.createElement('div');//rename cardEl
-        element.className = 'card';
+    static render(card, cardsContainer) {
+        const cardElement = document.createElement('div');
+        cardElement.className = 'card';
 
-        element.innerHTML = `
-            <span class="card__rank">${cardModel.getRank()}</span>
-            <span class="card__suit suit_${cardModel.getSuit()}"></span>
+        cardElement.innerHTML = `
+            <span class="card__rank">${card.getRank()}</span>
+            <span class="card__suit suit_${card.getSuit()}"></span>
         `;
 
-        element.addEventListener('click', () => {
-            this.toggleSelect(element);
+        cardElement.addEventListener('click', () => {
+            this.toggleSelect(cardElement);
         });
 
-        cardsContainer.appendChild(element);
+        cardsContainer.appendChild(cardElement);
     }
 
-    static toggleSelect(element) {
-        element.classList.toggle('card_selected');
+    static toggleSelect(cardElement) {
+        cardElement.classList.toggle('card_selected');
     }
 }

@@ -1,6 +1,7 @@
 class DeckView {
     static element = document.createElement('div');
-    static renderDeck(amount) {//createDeck
+
+    static render(amount) {
         this.element.className = 'deck';
         this.element.innerText = `Cards amount in deck: ${amount}`;
 

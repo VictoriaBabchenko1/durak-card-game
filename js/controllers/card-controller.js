@@ -1,10 +1,16 @@
 class CardController {
-    static createCard(cardModel, cardsContainer) {
-        CardView.renderCard(cardModel, cardsContainer)
+    static createCard(suit, rank, value) {
+        return new CardModel(suit, rank, value);
     }
 
-    //tossupCard fightCard
-    static canBeat(cardModel, otherCard) {
-        return cardModel.getSuit() === otherCard.getSuit() && cardModel.getValue() > otherCard.getValue();
+    static renderCard(card, cardsContainer) {
+        CardView.render(card, cardsContainer)
+    }
+
+    static canBeat(tossupCard, fightCard) {
+        const isTheSameSuit = tossupCard.getSuit() === fightCard.getSuit();
+        const canCardBeat = fightCard.getValue() > tossupCard.getValue();
+
+        return isTheSameSuit && canCardBeat;
     }
 }

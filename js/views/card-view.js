@@ -16,6 +16,12 @@ class CardView {
     }
 
     static toggleSelect(cardElement) {
+        const selectedCardElement = document.querySelector('.card_selected');
+
+        if (selectedCardElement && selectedCardElement !== cardElement) {
+            selectedCardElement.classList.remove('card_selected');
+        }
+
         cardElement.classList.toggle('card_selected');
     }
 }

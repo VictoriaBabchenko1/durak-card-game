@@ -12,11 +12,17 @@ class PlayerView {
 
         const playerCardsContainer = playerContainer.querySelector('.player__cards');
 
-        player.getCards().forEach(card => {
-            CardView.render(card, playerCardsContainer);
-        });
+        this.renderPlayerCards(player, playerCardsContainer);
 
         const gameContainer = document.querySelector('.playing-board');
         gameContainer.appendChild(playerContainer);
+    }
+
+    static renderPlayerCards(player, playerCardsContainer) {
+        playerCardsContainer.innerHTML = '';
+
+        player.getCards().forEach(card => {
+            CardView.render(card, playerCardsContainer);
+        });
     }
 }

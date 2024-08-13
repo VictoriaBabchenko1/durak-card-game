@@ -25,7 +25,7 @@ class PlayerController {
     }
 
     static selectCard(player, card) {
-        //select only one card
+        player.setSelectedCard(card);
     }
 
     static takeCards(player, count) {

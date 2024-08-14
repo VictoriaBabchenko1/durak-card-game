@@ -10,6 +10,7 @@ class CardView {
 
         cardElement.addEventListener('click', () => {
             this.toggleSelect(cardElement);
+            PlayerController.moveCardToField(card);
         });
 
         cardsContainer.appendChild(cardElement);

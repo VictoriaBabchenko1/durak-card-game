@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     PlayerController.takeCards(player1, 6);
     PlayerController.takeCards(player2, 6);
 
-    PlayerView.render(player1);
-    PlayerView.render(player2);
+    const playerElement1 = document.querySelector('.player_1')
+    const playerElement2 = document.querySelector('.player_2')
+
+    PlayerView.render(player1, playerElement1);
+    PlayerView.render(player2, playerElement2);
 });

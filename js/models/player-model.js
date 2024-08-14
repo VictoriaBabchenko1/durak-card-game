@@ -44,8 +44,4 @@ class PlayerModel {
     setSelectedCard(card) {
         this.selectedCard = card;
     }
-
-    clearSelectedCard() {
-        this.selectedCard = null;
-    }
 }

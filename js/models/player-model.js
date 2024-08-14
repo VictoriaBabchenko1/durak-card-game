@@ -3,6 +3,7 @@ class PlayerModel {
         this.name = name;
         this.mode = mode;
         this.cards = [];
+        this.selectedCard = null;
     }
 
     getName() {
@@ -34,5 +35,13 @@ class PlayerModel {
         if (index > -1) {
             this.cards.splice(index, 1);
         }
+    }
+
+    getSelectedCard() {
+        return this.selectedCard;
+    }
+
+    setSelectedCard(card) {
+        this.selectedCard = card;
     }
 }

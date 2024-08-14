@@ -9,7 +9,9 @@ class PlayerController {
     }
 
     static getPlayerByCardId(cardId) {
-        return this.players.find(player => player.getCards.some(card => card.getValue() === cardId));
+        return this.players.find(player =>
+            player.getCards().some(card => card.getValue() === cardId)
+        );
     }
 
     static getPlayerByName(name) {
@@ -25,7 +27,8 @@ class PlayerController {
     }
 
     static selectCard(player, card) {
-        //select only one card
+        player.setSelectedCard(card);
+        console.log("Selected card:", card);
     }
 
     static takeCards(player, count) {
@@ -33,9 +36,12 @@ class PlayerController {
         cards.forEach(card => player.addCard(card));
     }
 
-    // static moveCardToField(player, card) {
-    //     player.removeCard(card);
-    //     PlayingFieldController.addCardToField(card);
-    //     PlayerView.render(player);
-    // }
+    static moveCardToField(card) {
+        const player = this.getPlayerByCardId(card.getValue());
+
+        if (player) {
+            PlayingFieldController.addCardToField(card, player);
+            PlayerView.updatePlayerCards(player);
+        }
+    }
 }

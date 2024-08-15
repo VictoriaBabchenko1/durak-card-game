@@ -8,6 +8,10 @@ class CardsPairs {
         this.defenderCard = defender;
     }
 
+    getAttackerCard() {
+        return this.attackerCard;
+    }
+
     isBeaten() {
         return this.defenderCard !== null;
     }

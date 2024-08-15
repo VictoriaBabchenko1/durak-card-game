@@ -7,9 +7,9 @@ class CardController {
         CardView.render(card, cardsContainer)
     }
 
-    static canBeat(attacker, defender) {
-        const isTheSameSuit = attacker.getSuit() === defender.getSuit();
-        const canCardBeat = attacker.getValue() > defender.getValue();
+    static canBeat(defender, attacker) {
+        const isTheSameSuit = defender.getSuit() === attacker.getSuit();
+        const canCardBeat = defender.getValue() > attacker.getValue();
 
         return isTheSameSuit && canCardBeat;
     }

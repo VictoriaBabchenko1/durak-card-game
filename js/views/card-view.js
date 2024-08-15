@@ -9,20 +9,20 @@ class CardView {
         `;
 
         cardElement.addEventListener('click', () => {
-            //this.toggleSelect(cardElement);
+            this.toggleSelect(cardElement);
             PlayerController.moveCardToField(card);
-        })
+        });
 
         cardsContainer.appendChild(cardElement);
     }
 
-    // static toggleSelect(cardElement) {
-    //     const selectedCardElement = document.querySelector('.card_selected');
-    //
-    //     if (selectedCardElement && selectedCardElement !== cardElement) {
-    //         selectedCardElement.classList.remove('card_selected');
-    //     }
-    //
-    //     cardElement.classList.toggle('card_selected');
-    // }
+    static toggleSelect(cardElement) {
+        const selectedCardElement = document.querySelector('.card_selected');
+
+        if (selectedCardElement && selectedCardElement !== cardElement) {
+            selectedCardElement.classList.remove('card_selected');
+        }
+
+        cardElement.classList.toggle('card_selected');
+    }
 }

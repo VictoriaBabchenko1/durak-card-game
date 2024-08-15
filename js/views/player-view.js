@@ -1,9 +1,8 @@
 class PlayerView {
-    static render(player) {
-        const playerContainer = document.createElement('div');
-        playerContainer.className = 'player';
-        playerContainer.setAttribute('data-name', player.getName());
-        playerContainer.innerHTML = `
+    static render(player, playerElement) {
+        playerElement.setAttribute('data-name', player.getName());
+
+        playerElement.innerHTML = `
             <div class="player__info">
                 <p>Player name: ${player.getName()}</p>
                 <p>Player mode: ${player.getMode()}</p>
@@ -11,12 +10,9 @@ class PlayerView {
             <div class="player__cards"></div>
         `;
 
-        const playerCardsContainer = playerContainer.querySelector('.player__cards');
+        const playerCardsContainer = playerElement.querySelector('.player__cards');
 
         this.renderPlayerCards(player, playerCardsContainer);
-
-        const gameContainer = document.querySelector('.playing-board');
-        gameContainer.appendChild(playerContainer);
     }
 
     static renderPlayerCards(player, playerCardsContainer) {

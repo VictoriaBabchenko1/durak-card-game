@@ -27,8 +27,12 @@ class PlayerController {
     }
 
     static selectCard(player, card) {
-        player.setSelectedCard(card);
-        console.log("Selected card:", card);
+        if (player.getMode() === 'defender') {
+            player.setSelectedCard(card);
+            console.log("Selected card: ", card);
+        } else {
+            this.moveCardToField(card);
+        }
     }
 
     static takeCards(player, count) {
@@ -36,12 +40,10 @@ class PlayerController {
         cards.forEach(card => player.addCard(card));
     }
 
-    static moveCardToField(card) {
+    static moveCardToField(card) {//need player as argument
         const player = this.getPlayerByCardId(card.getValue());
 
-        if (player) {
-            PlayingFieldController.addCardToField(card, player);
-            PlayerView.updatePlayerCards(player);
-        }
+        PlayingFieldController.addCardToField(card, player);
+        PlayerView.updatePlayerCards(player);
     }
 }

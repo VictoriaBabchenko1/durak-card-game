@@ -2,9 +2,9 @@ class PlayingFieldController {
     static fieldCardsPairs = [];
     static discardPile = [];
 
-    static hasCardWithSameSuit(suit) {
+    static hasCardWithSameValue(value) {
         return this.fieldCardsPairs.some(pair =>
-            pair.attackerCard.getSuit() === suit || (pair.defenderCard && pair.defenderCard.getSuit() === suit)
+            pair.attackerCard.getValue() === value || (pair.defenderCard && pair.defenderCard.getValue() === value)
         );
     }
 
@@ -17,24 +17,30 @@ class PlayingFieldController {
     }
 
     static addCardToField(card, player) {
-        if (player.getMode() === 'attacker' && (PlayingFieldController.hasCardWithSameSuit(card.getSuit()) || !this.hasUnbeatenCard())) {
-            this.fieldCardsPairs.push(new CardsPairs(card));
-            player.removeCard(card);
+        if (player.getMode() === 'attacker') {
+            if (this.hasCardWithSameValue(card.getValue()) || !this.hasUnbeatenCard()) {
+                this.fieldCardsPairs.push(new CardsPairs(card));
+                player.removeCard(card);
+            } else {
+                console.log("Attacker cannot play this card.");
+                return;
+            }
         } else if (player.getMode() === 'defender') {
             const lastPair = this.fieldCardsPairs[this.fieldCardsPairs.length - 1];
 
-            if (lastPair && !lastPair.isBeaten() && CardController.canBeat(card, lastPair.attackerCard)) {
+            if (!lastPair.isBeaten() && CardController.canBeat(card, lastPair.getAttackerCard())) {
                 lastPair.setDefenderCard(card);
                 player.removeCard(card);
             } else {
                 console.log("This card cannot beat the attacker card.");
+                return;
             }
         }
 
         PlayingFieldView.render(this.fieldCardsPairs);
     }
 
-    static moveCardsToDiscardPile(discardPileController) {
+    static moveCardsToDiscardPile() {
         this.fieldCardsPairs.forEach(pair => {
             this.discardPile.push(pair.attackerCard);
             if (pair.defenderCard) {

@@ -16,15 +16,20 @@ class PlayerView {
     }
 
     static renderPlayerCards(player, playerCardsContainer) {
-        playerCardsContainer.innerHTML = '';
+        playerCardsContainer.replaceChildren();
 
         player.getCards().forEach(card => {
-            CardView.render(card, playerCardsContainer);
+            const cardElement = CardView.render(card, playerCardsContainer);
+
+            cardElement.addEventListener('click', () => {
+                PlayerController.selectCard(player, card);
+            });
         });
     }
 
     static updatePlayerCards(player) {
         const playerContainer = document.querySelector(`.player[data-name="${player.getName()}"]`);
+
         if (playerContainer) {
             const playerCardsContainer = playerContainer.querySelector('.player__cards');
             this.renderPlayerCards(player, playerCardsContainer);

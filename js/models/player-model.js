@@ -3,7 +3,6 @@ class PlayerModel {
         this.name = name;
         this.mode = mode;
         this.cards = [];
-        this.selectedCard = null;
     }
 
     getName() {
@@ -31,17 +30,6 @@ class PlayerModel {
     }
 
     removeCard(card) {
-        const index = this.cards.indexOf(card);
-        if (index > -1) {
-            this.cards.splice(index, 1);
-        }
-    }
-
-    getSelectedCard() {
-        return this.selectedCard;
-    }
-
-    setSelectedCard(card) {
-        this.selectedCard = card;
+        this.cards = this.cards.filter(c => c !== card)
     }
 }

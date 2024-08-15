@@ -1,21 +1,23 @@
 class PlayingFieldView {
     static render(cardsPairs) {
-        const fieldContainer = document.querySelector('.field-container');
-        fieldContainer.innerHTML = '';
+        const fieldElement = document.querySelector('.field-container');
+        fieldElement.innerHTML = '';
 
         cardsPairs.forEach(pair => {
-            const pairContainer = document.createElement('div');
-            pairContainer.className = 'card-pair';
+            const cardPairElement = document.createElement('div');
+            cardPairElement.className = 'card-pair';
 
             if (pair.attackerCard) {
-                CardView.render(pair.attackerCard, pairContainer);
+                const attackerCardElement = CardView.render(pair.attackerCard, cardPairElement);
+                attackerCardElement.classList.add('card_attacker');
             }
 
             if (pair.defenderCard) {
-                CardView.render(pair.defenderCard, pairContainer);
+                const defenderCardElement = CardView.render(pair.defenderCard, cardPairElement);
+                defenderCardElement.classList.add('card_defender');
             }
 
-            fieldContainer.appendChild(pairContainer);
+            fieldElement.appendChild(cardPairElement);
         });
     }
 }

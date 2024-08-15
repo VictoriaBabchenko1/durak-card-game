@@ -8,12 +8,13 @@ class CardView {
             <span class="card__suit suit_${card.getSuit()}"></span>
         `;
 
-        cardElement.addEventListener('click', () => {
-            this.toggleSelect(cardElement);
-            PlayerController.moveCardToField(card);
-        });
+        // cardElement.addEventListener('click', () => {
+        //     this.toggleSelect(cardElement);
+        // });
 
         cardsContainer.appendChild(cardElement);
+
+        return cardElement;
     }
 
     static toggleSelect(cardElement) {

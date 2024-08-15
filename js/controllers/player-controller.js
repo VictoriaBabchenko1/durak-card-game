@@ -8,9 +8,9 @@ class PlayerController {
         return player;
     }
 
-    static getPlayerByCardId(cardId) {
+    static getPlayerByCardId(cardValue, cardSuit) {
         return this.players.find(player =>
-            player.getCards().some(card => card.getValue() === cardId)
+            player.getCards().some(card => card.getValue() === cardValue && card.getSuit() === cardSuit)
         );
     }
 
@@ -27,12 +27,8 @@ class PlayerController {
     }
 
     static selectCard(player, card) {
-        if (player.getMode() === 'defender') {
-            player.setSelectedCard(card);
-            console.log("Selected card: ", card);
-        } else {
-            this.moveCardToField(card);
-        }
+        console.log("Selected card: ", card);
+        this.moveCardToField(card, player);
     }
 
     static takeCards(player, count) {
@@ -40,9 +36,7 @@ class PlayerController {
         cards.forEach(card => player.addCard(card));
     }
 
-    static moveCardToField(card) {//need player as argument
-        const player = this.getPlayerByCardId(card.getValue());
-
+    static moveCardToField(card, player) {
         PlayingFieldController.addCardToField(card, player);
         PlayerView.updatePlayerCards(player);
     }

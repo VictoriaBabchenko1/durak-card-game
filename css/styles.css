@@ -22,10 +22,11 @@ body, html {
 .game-info {
     display: flex;
     align-self: flex-start;
+    gap: 20px;
     font-size: 20px;
 }
 
-.deck {
+.deck, .trump {
     background-color: var(--beige);
     padding: 15px;
     border-radius: 15px;
@@ -85,22 +86,22 @@ body, html {
     font-size: 60px;
 }
 
-.suit_clubs::before {
+.suit_clubs::after {
     content: "\2663";
     color: var(--black);
 }
 
-.suit_hearts::before {
+.suit_hearts::after {
     content: "\2665";
     color: var(--red);
 }
 
-.suit_spades::before {
+.suit_spades::after {
     content: "\2660";
     color: var(--black);
 }
 
-.suit_diamonds::before {
+.suit_diamonds::after {
     content: "\2666";
     color: var(--red);
 }

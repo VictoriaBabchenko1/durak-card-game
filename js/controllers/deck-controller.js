@@ -1,5 +1,6 @@
 class DeckController {
     static cards = [];
+    static trumpSuit = null;
 
     static createDeck() {
         const suits = ['clubs', 'diamonds', 'spades', 'hearts'];
@@ -21,7 +22,13 @@ class DeckController {
             }
         }
 
-        DeckView.render(this.cards.length);
+        this.randomTrumpSelect(suits);
+
+        DeckView.render(this.cards.length, this.trumpSuit);
+    }
+
+    static randomTrumpSelect (suits) {
+        this.trumpSuit = suits[Math.floor(Math.random() * suits.length)];
     }
 
     static shuffleDeck() {

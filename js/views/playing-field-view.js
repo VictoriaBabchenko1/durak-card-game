@@ -7,17 +7,31 @@ class PlayingFieldView {
             const cardPairElement = document.createElement('div');
             cardPairElement.className = 'card-pair';
 
-            if (pair.attackerCard) {
-                const attackerCardElement = CardView.render(pair.attackerCard, cardPairElement);
+            if (pair.getAttackerCard()) {
+                const attackerCardElement = CardView.render(pair.getAttackerCard(), cardPairElement);
                 attackerCardElement.classList.add('card_attacker');
+
+                attackerCardElement.addEventListener('click', () => {
+                    this.handlePlayingFieldCardClick(pair, pair.getAttackerCard(), attackerCardElement);
+                });
             }
 
-            if (pair.defenderCard) {
-                const defenderCardElement = CardView.render(pair.defenderCard, cardPairElement);
+            if (pair.getDefenderCard()) {
+                const defenderCardElement = CardView.render(pair.getDefenderCard(), cardPairElement);
                 defenderCardElement.classList.add('card_defender');
             }
 
             fieldElement.appendChild(cardPairElement);
         });
+    }
+
+    static handlePlayingFieldCardClick(pair, card, cardElement) {
+        const selectedPlayer = PlayerController.getPlayerByMode('defender')[0];
+        const selectedCard = selectedPlayer.getSelectedCard();
+
+        if (selectedCard) {
+            PlayingFieldController.addCardToField(selectedCard, pair, selectedPlayer);
+            CardView.toggleSelect(cardElement);
+        }
     }
 }

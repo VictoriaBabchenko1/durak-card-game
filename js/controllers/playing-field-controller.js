@@ -16,19 +16,14 @@ class PlayingFieldController {
         return this.fieldCardsPairs.every(pair => pair.isBeaten());
     }
 
-    static addCardToField(card, player) {
-        const lastPair = this.fieldCardsPairs[this.fieldCardsPairs.length - 1];
-
-        if (player.getMode() === 'attacker') {
-            this.handleAttackerMove(card, lastPair, player);
-        } else if (player.getMode() === 'defender') {
-            this.handleDefenderMove(card, lastPair, player);
-        }
-
-        PlayingFieldView.render(this.fieldCardsPairs);
+    static addCardToField(card, pair, player) {
+        this.handleDefenderMove(card, pair, player);
+        player.setSelectedCard(null);
+        PlayerView.updatePlayerCards(player);
+        PlayingFieldView.render(PlayingFieldController.fieldCardsPairs);
     }
 
-    static handleAttackerMove(card, lastPair, player) {
+    static handleAttackerMove(card, player) {
         const canPlayCard = this.fieldCardsPairs.length === 0 || this.hasCardWithSameValue(card.getValue());//devide into two
 
         if (canPlayCard) {
@@ -39,11 +34,11 @@ class PlayingFieldController {
         }
     }
 
-    static handleDefenderMove(card, lastPair, player) {
-        const canPlayCard = !lastPair.isBeaten() && CardController.canBeat(card, lastPair.getAttackerCard());
+    static handleDefenderMove(card, cardPair, player) {
+        const canPlayCard = !cardPair.isBeaten() && CardController.canBeat(card, cardPair.getAttackerCard());
 
         if (canPlayCard) {
-            lastPair.setDefenderCard(card);
+            cardPair.setDefenderCard(card);
             player.removeCard(card);
         } else {
             console.log("This card cannot be played.");

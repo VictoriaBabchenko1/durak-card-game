@@ -27,8 +27,8 @@ class PlayerController {
     }
 
     static selectCard(player, card) {
-        console.log("Selected card: ", card);
-        this.moveCardToField(card, player);
+        console.log(`${player.getMode()} selected card: `, card);
+        player.setSelectedCard(card);
     }
 
     static takeCards(player, count) {
@@ -37,7 +37,8 @@ class PlayerController {
     }
 
     static moveCardToField(card, player) {
-        PlayingFieldController.addCardToField(card, player);
+        PlayingFieldController.handleAttackerMove(card, player);
         PlayerView.updatePlayerCards(player);
+        PlayingFieldView.render(PlayingFieldController.fieldCardsPairs);
     }
 }

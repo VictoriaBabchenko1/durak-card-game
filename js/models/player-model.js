@@ -3,6 +3,7 @@ class PlayerModel {
         this.name = name;
         this.mode = mode;
         this.cards = [];
+        this.selectedCard = null;
     }
 
     getName() {
@@ -31,5 +32,13 @@ class PlayerModel {
 
     removeCard(card) {
         this.cards = this.cards.filter(c => c !== card)
+    }
+
+    getSelectedCard() {
+        return this.selectedCard;
+    }
+
+    setSelectedCard(card) {
+        this.selectedCard = card;
     }
 }

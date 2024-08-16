@@ -22,7 +22,13 @@ class PlayerView {
             const cardElement = CardView.render(card, playerCardsContainer);
 
             cardElement.addEventListener('click', () => {
-                PlayerController.selectCard(player, card);
+                if(player.getMode() === 'defender') {
+                    PlayerController.selectCard(player, card);
+                    CardView.toggleSelect(cardElement);
+                }
+                else {
+                    PlayerController.moveCardToField(card, player);
+                }
             });
         });
     }

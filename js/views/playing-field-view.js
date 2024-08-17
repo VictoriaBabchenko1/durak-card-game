@@ -1,7 +1,7 @@
 class PlayingFieldView {
     static render(cardsPairs) {
         const fieldElement = document.querySelector('.field-container');
-        fieldElement.innerHTML = '';
+        fieldElement.replaceChildren();
 
         cardsPairs.forEach(pair => {
             const cardPairElement = document.createElement('div');

@@ -8,7 +8,7 @@ class PlayerController {
         return player;
     }
 
-    static getPlayerByCardId(cardValue, cardSuit) {
+    static getPlayerByCard(cardValue, cardSuit) {
         return this.players.find(player =>
             player.getCards().some(card => card.getValue() === cardValue && card.getSuit() === cardSuit)
         );

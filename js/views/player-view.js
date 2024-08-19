@@ -30,7 +30,7 @@ class PlayerView {
             const cardElement = CardView.render(card, playerCardsContainer);
 
             cardElement.addEventListener('click', () => {
-                if(player.getMode() === 'defender') {
+                if (player.getMode() === 'defender') {
                     PlayerController.selectCard(player, card);
                     CardView.toggleSelect(cardElement);
                 }

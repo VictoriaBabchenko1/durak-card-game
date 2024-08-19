@@ -3,10 +3,15 @@ class CardView {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
 
-        cardElement.innerHTML = `
-            <span class="card__rank">${card.getRank()}</span>
-            <span class="card__suit suit_${card.getSuit()}"></span>
-        `;
+        const rankElement = document.createElement('span');
+        rankElement.className = 'card__rank';
+        rankElement.textContent = card.getRank();
+
+        const suitElement = document.createElement('span');
+        suitElement.className = `card__suit suit_${card.getSuit()}`;
+
+        cardElement.appendChild(rankElement);
+        cardElement.appendChild(suitElement);
 
         cardsContainer.appendChild(cardElement);
 

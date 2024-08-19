@@ -24,7 +24,7 @@ class PlayingFieldController {
     }
 
     static handleAttackerMove(card, player) {
-        const canPlayCard = this.fieldCardsPairs.length === 0 || this.hasCardWithSameValue(card.getValue());//devide into two
+        const canPlayCard = this.fieldCardsPairs.length === 0 || this.hasCardWithSameValue(card.getValue());
 
         if (canPlayCard) {
             this.fieldCardsPairs.push(new CardsPairs(card));

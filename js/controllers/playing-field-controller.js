@@ -56,4 +56,22 @@ class PlayingFieldController {
         this.fieldCardsPairs = [];
         PlayingFieldView.render(this.fieldCardsPairs);
     }
+
+    static clearFieldCards() {
+        const cardsOnField = [];
+
+        this.fieldCardsPairs.forEach(pair => {
+            cardsOnField.push(pair.attackerCard);
+            if (pair.defenderCard) {
+                cardsOnField.push(pair.defenderCard);
+            }
+        });
+
+        this.fieldCardsPairs = [];
+        return cardsOnField;
+    }
+
+    static hasCardsOnField() {
+        return this.fieldCardsPairs.length > 0;
+    }
 }

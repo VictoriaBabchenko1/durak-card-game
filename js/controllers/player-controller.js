@@ -31,9 +31,25 @@ class PlayerController {
         player.setSelectedCard(card);
     }
 
-    static takeCards(player, count) {
+    static takeCardsFromDeck(player, count) {
         const cards = DeckController.dealCards(count);
         cards.forEach(card => player.addCard(card));
+    }
+
+    static takeCardsFromPlayingField(player) {
+        if (player.getMode() === 'defender' && PlayingFieldController.hasUnbeatenCard()) {
+            const fieldCards = PlayingFieldController.clearFieldCards();
+            fieldCards.forEach(card => player.addCard(card));
+
+            // Check if the attacker needs more cards
+            const attacker = this.getPlayerByMode('attacker')[0];
+            const neededCards = 6 - attacker.getCards().length;
+
+            if (neededCards > 0) {
+                const newCards = DeckController.dealCards(neededCards);
+                newCards.forEach(card => attacker.addCard(card));
+            }
+        }
     }
 
     static moveCardToField(card, player) {

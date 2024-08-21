@@ -148,3 +148,50 @@ body, html {
     background-color: var(--light-purple);
     top: 50%;
 }
+
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: 30vw;
+    height: 20vh;
+}
+
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.modal_button-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color: var(--coral);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.modal__content_winner {
+    font-size: 24px;
+}
+
+.modal_button-ok {
+    padding: 10px 20px;
+    background-color: var(--coral);
+    color: white;
+    border: none;
+    cursor: pointer;
+}

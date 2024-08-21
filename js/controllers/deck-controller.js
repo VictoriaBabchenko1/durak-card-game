@@ -50,4 +50,8 @@ class DeckController {
 
         return dealtCards;
     }
+
+    static isEmpty() {
+        return this.cards.length === 0;
+    }
 }

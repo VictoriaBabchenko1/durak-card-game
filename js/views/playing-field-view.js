@@ -22,6 +22,8 @@ class PlayingFieldView {
             }
 
             fieldElement.appendChild(cardPairElement);
+
+            PlayerView.updateButtonsState();
         });
     }
 

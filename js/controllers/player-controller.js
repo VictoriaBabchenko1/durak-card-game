@@ -1,5 +1,6 @@
 class PlayerController {
     static players = [];
+    static PLAYER_CARDS_COUNT = 6;
 
     static createPlayer(name, mode) {
         const player = new PlayerModel(name, mode);
@@ -24,6 +25,7 @@ class PlayerController {
 
     static changePlayerMode(player, mode) {
         player.setMode(mode);
+        PlayerView.updatePlayerMode(player);
     }
 
     static selectCard(player, card) {
@@ -36,25 +38,67 @@ class PlayerController {
         cards.forEach(card => player.addCard(card));
     }
 
-    static takeCardsFromPlayingField(player) {
-        if (player.getMode() === 'defender' && PlayingFieldController.hasUnbeatenCard()) {
-            const fieldCards = PlayingFieldController.clearFieldCards();
-            fieldCards.forEach(card => player.addCard(card));
-
-            // Check if the attacker needs more cards
-            const attacker = this.getPlayerByMode('attacker')[0];
-            const neededCards = 6 - attacker.getCards().length;
-
-            if (neededCards > 0) {
-                const newCards = DeckController.dealCards(neededCards);
-                newCards.forEach(card => attacker.addCard(card));
-            }
-        }
-    }
-
     static moveCardToField(card, player) {
         PlayingFieldController.handleAttackerMove(card, player);
         PlayerView.updatePlayerCards(player);
         PlayingFieldView.render(PlayingFieldController.fieldCardsPairs);
+    }
+
+    static handleTakeCardsButtonClick(player) {
+        if (player.getMode() === 'defender' && PlayingFieldController.hasUnbeatenCard()) {
+            const clearedFieldCards = PlayingFieldController.clearFieldCards();
+            clearedFieldCards.forEach(card => player.addCard(card));
+
+            this.dealCardsToPlayers();
+            PlayerView.updateButtonsState();
+        }
+    }
+
+    static handleDoneButtonClick(player) {
+        if (player.getMode() === 'attacker' && PlayingFieldController.areAllCardsBeaten()) {
+            PlayingFieldController.moveCardsToDiscardPile();
+            this.dealCardsToPlayers();
+            PlayerView.updateButtonsState();
+            this.swapPlayerModes();
+        } else {
+            console.log("Not all cards are beaten. Can't end the turn.");
+        }
+    }
+
+    static dealCardsToPlayers() {
+        const attacker = this.getPlayerByMode('attacker')[0];
+        const defender = this.getPlayerByMode('defender')[0];
+
+        if (attacker.getCards().length < this.PLAYER_CARDS_COUNT) {
+            const neededCards = 6 - attacker.getCards().length;
+            this.takeCardsFromDeck(attacker, neededCards);
+        }
+
+        if (defender.getCards().length < this.PLAYER_CARDS_COUNT) {
+            const neededCards = 6 - defender.getCards().length;
+            this.takeCardsFromDeck(defender, neededCards);
+        }
+
+        PlayerView.updatePlayerCards(attacker);
+        PlayerView.updatePlayerCards(defender);
+    }
+
+    static swapPlayerModes() {
+        const attacker = this.getPlayerByMode('attacker')[0];
+        const defender = this.getPlayerByMode('defender')[0];
+
+        if (attacker && defender) {
+            this.changePlayerMode(attacker, 'defender');
+            this.changePlayerMode(defender, 'attacker');
+        }
+    }
+
+    static checkForWin() {
+        const deckIsEmpty = DeckController.isEmpty();
+        const winningPlayer = this.players.find(player => player.getCards().length === 0);
+
+        if (deckIsEmpty && winningPlayer) {
+            PlayerView.displayWinnerModal(winningPlayer.getName());
+        }
     }
 }

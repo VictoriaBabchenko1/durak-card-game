@@ -32,6 +32,8 @@ class PlayingFieldController {
         } else {
             console.log("Attacker cannot play this card.");
         }
+
+        PlayerController.checkForWin();
     }
 
     static handleDefenderMove(card, cardPair, player) {
@@ -43,14 +45,14 @@ class PlayingFieldController {
         } else {
             console.log("This card cannot be played.");
         }
+
+        PlayerController.checkForWin();
     }
 
     static moveCardsToDiscardPile() {
         this.fieldCardsPairs.forEach(pair => {
             this.discardPile.push(pair.attackerCard);
-            if (pair.defenderCard) {
-                this.discardPile.push(pair.defenderCard);
-            }
+            this.discardPile.push(pair.defenderCard);
         });
 
         this.fieldCardsPairs = [];
@@ -68,10 +70,12 @@ class PlayingFieldController {
         });
 
         this.fieldCardsPairs = [];
+        PlayingFieldView.render(this.fieldCardsPairs);
+
         return cardsOnField;
     }
 
-    static hasCardsOnField() {
-        return this.fieldCardsPairs.length > 0;
+    static isFieldEmpty() {
+        return this.fieldCardsPairs.length === 0;
     }
 }

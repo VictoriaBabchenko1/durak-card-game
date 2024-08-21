@@ -6,10 +6,11 @@ class PlayerView {
         playerInfoElement.className = 'player__info';
 
         const playerNameElement = document.createElement('p');
+        playerNameElement.className = 'player__name';
         playerNameElement.textContent = `Player name: ${player.getName()}`;
 
         const playerModeElement = document.createElement('p');
-        playerModeElement.textContent = `Player mode: ${player.getMode()}`;
+        playerModeElement.classList.add('player__mode');
 
         playerInfoElement.appendChild(playerNameElement);
         playerInfoElement.appendChild(playerModeElement);
@@ -20,8 +21,17 @@ class PlayerView {
         playerElement.appendChild(playerInfoElement);
         this.renderPlayerActions(player, playerElement);
         playerElement.appendChild(playerCardsElement);
-
         this.renderPlayerCards(player, playerCardsElement);
+        this.updatePlayerMode(player);
+    }
+
+    static updatePlayerMode(player) {
+        const playerContainer = document.querySelector(`.player[data-name="${player.getName()}"]`);
+
+        if (playerContainer) {
+            const playerModeElement = playerContainer.querySelector('.player__mode');
+            playerModeElement.textContent = `Player mode: ${player.getMode()}`;
+        }
     }
 
     static renderPlayerCards(player, playerCardsElement) {
@@ -69,18 +79,10 @@ class PlayerView {
         takeCardsButton.textContent = 'Take Cards';
         takeCardsButton.classList.add('button_take-cards');
 
-        if (player.getMode() !== 'defender') {
-            takeCardsButton.disabled = true;
-        }
+        takeCardsButton.disabled = true;
 
         takeCardsButton.addEventListener('click', () => {
-            PlayerController.takeCardsFromPlayingField(player);
-
-            const attacker = PlayerController.getPlayerByMode('attacker')[0];
-
-            PlayerView.updatePlayerCards(player);
-            PlayerView.updatePlayerCards(attacker);
-            PlayingFieldView.render(PlayingFieldController.fieldCardsPairs);
+            PlayerController.handleTakeCardsButtonClick(player);
         });
 
         return takeCardsButton;
@@ -91,35 +93,53 @@ class PlayerView {
         doneButton.textContent = 'Done';
         doneButton.classList.add('button_done');
 
-        if (player.getMode() !== 'attacker') {
-            doneButton.disabled = true;
-        }
+        doneButton.disabled = true;
+
+        doneButton.addEventListener('click', () => {
+            PlayerController.handleDoneButtonClick(player);
+        });
 
         return doneButton;
     }
 
-    // static updateActionButtonsState(player) {
-    //     const takeCardsButton = document.querySelector('.button_take-cards');
-    //     const doneButton = document.querySelector('.button_done');
-    //
-    //     const hasCardsOnField = PlayingFieldController.hasCardsOnField();
-    //     const hasUnbeatenCard = PlayingFieldController.hasUnbeatenCard();
-    //
-    //     if (!hasCardsOnField) {
-    //         takeCardsButton.disabled = true;
-    //         doneButton.disabled = true;
-    //     } else {
-    //         if (player.getMode() === 'defender' && hasUnbeatenCard) {
-    //             takeCardsButton.disabled = false;
-    //         } else {
-    //             takeCardsButton.disabled = true;
-    //         }
-    //
-    //         if (player.getMode() === 'attacker') {
-    //             doneButton.disabled = false;
-    //         } else {
-    //             doneButton.disabled = true;
-    //         }
-    //     }
-    // }
+    static updateButtonsState() {
+        const defender = PlayerController.getPlayerByMode('defender')[0];
+        const attacker = PlayerController.getPlayerByMode('attacker')[0];
+
+        if (defender) {
+            const takeCardsButton = document.querySelector(`.player[data-name="${defender.getName()}"] .button_take-cards`);
+            if (takeCardsButton) {
+                takeCardsButton.disabled = PlayingFieldController.isFieldEmpty() || PlayingFieldController.areAllCardsBeaten();
+            }
+        }
+
+        if (attacker) {
+            const doneButton = document.querySelector(`.player[data-name="${attacker.getName()}"] .button_done`);
+            if (doneButton) {
+                doneButton.disabled = PlayingFieldController.isFieldEmpty() || PlayingFieldController.hasUnbeatenCard();
+            }
+        }
+    }
+
+    static displayWinnerModal(winnerName) {
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+        modal.innerHTML = `
+            <button class="modal_button-close">&times;</button>
+            <div class="modal__content">
+                <p class="modal__content_winner">Winner: ${winnerName}</p>
+                <button class="modal_button-ok">OK</button>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        modal.querySelector('.modal_button-close').addEventListener('click', () => {
+            location.reload();
+        });
+
+        modal.querySelector('.modal_button-ok').addEventListener('click', () => {
+            location.reload();
+        });
+    }
 }

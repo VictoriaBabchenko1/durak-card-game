@@ -121,18 +121,34 @@ class PlayerView {
         }
     }
 
-    static displayWinnerModal(winnerName) {
+    static renderWinnerModal(winnerName) {
+        const overlay = document.createElement('div');
+        overlay.classList.add('modal-overlay');
+
         const modal = document.createElement('div');
         modal.classList.add('modal');
-        modal.innerHTML = `
-            <button class="modal_button-close">&times;</button>
-            <div class="modal__content">
-                <p class="modal__content_winner">Winner: ${winnerName}</p>
-                <button class="modal_button-ok">OK</button>
-            </div>
-        `;
 
-        document.body.appendChild(modal);
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('modal__content');
+
+        const closeButton = document.createElement('button');
+        closeButton.classList.add('modal_button-close');
+        closeButton.textContent = '\u2715';
+
+        const winnerText = document.createElement('p');
+        winnerText.classList.add('modal__content_winner');
+        winnerText.textContent = `Winner: ${winnerName}`;
+
+        const okButton = document.createElement('button');
+        okButton.classList.add('modal_button-ok');
+        okButton.textContent = 'OK';
+
+        modalContent.appendChild(closeButton);
+        modalContent.appendChild(winnerText);
+        modalContent.appendChild(okButton);
+        modal.appendChild(modalContent);
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
 
         modal.querySelector('.modal_button-close').addEventListener('click', () => {
             location.reload();

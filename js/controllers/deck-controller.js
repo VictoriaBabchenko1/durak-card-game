@@ -18,7 +18,7 @@ class DeckController {
 
         for (let suit of suits) {
             for (let [rank, value] of Object.entries(ranksAndValues)) {
-                this.cards.push(new CardModel(suit, rank, value));
+                this.cards.push(CardController.createCard(suit, rank, value));
             }
         }
 

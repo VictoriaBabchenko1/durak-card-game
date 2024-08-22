@@ -13,6 +13,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     PlayerView.render(player1, playerElement1);
     PlayerView.render(player2, playerElement2);
-
-    PlayerView.displayWinnerModal(player1);
 });

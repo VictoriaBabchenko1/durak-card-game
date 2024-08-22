@@ -21,6 +21,7 @@ class PlayingFieldController {
         player.setSelectedCard(null);
         PlayerView.updatePlayerCards(player);
         PlayingFieldView.render(PlayingFieldController.fieldCardsPairs);
+        PlayerController.checkForWin();
     }
 
     static handleAttackerMove(card, player) {
@@ -32,8 +33,6 @@ class PlayingFieldController {
         } else {
             console.log("Attacker cannot play this card.");
         }
-
-        PlayerController.checkForWin();
     }
 
     static handleDefenderMove(card, cardPair, player) {
@@ -45,8 +44,6 @@ class PlayingFieldController {
         } else {
             console.log("This card cannot be played.");
         }
-
-        PlayerController.checkForWin();
     }
 
     static moveCardsToDiscardPile() {

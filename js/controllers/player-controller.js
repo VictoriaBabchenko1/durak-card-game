@@ -9,16 +9,6 @@ class PlayerController {
         return player;
     }
 
-    static getPlayerByCard(cardValue, cardSuit) {
-        return this.players.find(player =>
-            player.getCards().some(card => card.getValue() === cardValue && card.getSuit() === cardSuit)
-        );
-    }
-
-    static getPlayerByName(name) {
-        return this.players.find(player => player.getName() === name);
-    }
-
     static getPlayerByMode( mode) {
         return this.players.filter(player => player.getMode() === mode);
     }
@@ -42,6 +32,7 @@ class PlayerController {
         PlayingFieldController.handleAttackerMove(card, player);
         PlayerView.updatePlayerCards(player);
         PlayingFieldView.render(PlayingFieldController.fieldCardsPairs);
+        PlayerController.checkForWin();
     }
 
     static handleTakeCardsButtonClick(player) {
@@ -98,7 +89,7 @@ class PlayerController {
         const winningPlayer = this.players.find(player => player.getCards().length === 0);
 
         if (deckIsEmpty && winningPlayer) {
-            PlayerView.displayWinnerModal(winningPlayer.getName());
+            PlayerView.renderWinnerModal(winningPlayer.getName());
         }
     }
 }

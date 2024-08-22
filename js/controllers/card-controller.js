@@ -3,10 +3,6 @@ class CardController {
         return new CardModel(suit, rank, value);
     }
 
-    static renderCard(card, cardsContainer) {
-        CardView.render(card, cardsContainer)
-    }
-
     static canBeat(defender, attacker) {
         const isTheSameSuit = defender.getSuit() === attacker.getSuit();
         const canCardBeat = defender.getValue() > attacker.getValue();
